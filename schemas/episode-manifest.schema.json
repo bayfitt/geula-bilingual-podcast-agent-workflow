@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/episode-manifest.schema.json",
+  "title": "Bilingual podcast episode manifest",
+  "type": "object",
+  "required": ["episode_id", "status", "source", "languages", "caption_status", "publication_authorization"],
+  "properties": {
+    "episode_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["discovered", "queued", "in_progress", "blocked", "ready_to_publish", "published_bilingual", "no_op"]},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "source": {
+      "type": "object",
+      "required": ["kind", "canonical_url", "title", "published_at"],
+      "properties": {
+        "kind": {"enum": ["article", "video"]},
+        "canonical_url": {"type": "string", "format": "uri"},
+        "title": {"type": "string"},
+        "author_or_channel": {"type": ["string", "null"]},
+        "stable_video_id": {"type": ["string", "null"]},
+        "published_at": {"type": "string", "format": "date-time"},
+        "retrieved_at_utc": {"type": ["string", "null"], "format": "date-time"},
+        "evidence_path": {"type": ["string", "null"]},
+        "sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "languages": {
+      "type": "object",
+      "required": ["he", "en"],
+      "properties": {
+        "he": {"$ref": "#/$defs/edition"},
+        "en": {"$ref": "#/$defs/edition"}
+      },
+      "additionalProperties": false
+    },
+    "caption_status": {"enum": ["paused_no_files", "generated_not_attached", "attached_verified", "blocked"]},
+    "publication_authorization": {"type": "string", "minLength": 1},
+    "next_unresolved_gate": {"type": ["string", "null"]},
+    "live_episode_urls": {"type": "object", "properties": {"he": {"type": ["string", "null"]}, "en": {"type": ["string", "null"]}}, "additionalProperties": false},
+    "audit_path": {"type": ["string", "null"]}
+  },
+  "$defs": {
+    "edition": {
+      "type": "object",
+      "properties": {
+        "master_path": {"type": ["string", "null"]},
+        "transcript_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+        "model_names": {"type": "array", "items": {"type": "string"}},
+        "voice_profile_ref": {"type": ["string", "null"]},
+        "audio_chunks": {"type": "array", "items": {"$ref": "#/$defs/audioChunk"}},
+        "audio_path": {"type": ["string", "null"]},
+        "audio_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+        "audio_metadata": {"$ref": "#/$defs/audioMetadata"},
+        "provider_usage": {"$ref": "#/$defs/providerUsage"},
+        "caption": {"$ref": "#/$defs/caption"},
+        "episode_art_path": {"type": ["string", "null"]},
+        "episode_art_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+        "artwork_metadata": {"$ref": "#/$defs/artwork"},
+        "publication_readback": {"$ref": "#/$defs/publicationReadback"},
+        "live_episode_url": {"type": ["string", "null"], "format": "uri"}
+      },
+      "additionalProperties": true
+    },
+    "audioChunk": {
+      "type": "object",
+      "required": ["index", "start_paragraph", "end_paragraph", "model", "language", "transcript_sha256"],
+      "properties": {
+        "index": {"type": "integer", "minimum": 0},
+        "start_paragraph": {"type": "integer", "minimum": 1},
+        "end_paragraph": {"type": "integer", "minimum": 1},
+        "model": {"type": "string"},
+        "voice_profile_ref": {"type": ["string", "null"]},
+        "language": {"enum": ["he", "en"]},
+        "settings": {"type": "object"},
+        "seed": {"type": ["integer", "null"]},
+        "request_id": {"type": ["string", "null"]},
+        "transcript_sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+        "audio_path": {"type": ["string", "null"]},
+        "audio_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+        "usage": {"$ref": "#/$defs/providerUsage"},
+        "jev_action_id": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "providerUsage": {
+      "type": "object",
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "audio_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "duration_seconds": {"type": ["number", "null"], "minimum": 0},
+        "provider_reported_cost_usd": {"type": ["number", "null"], "minimum": 0},
+        "provider_displayed_approximate_cost_usd": {"type": ["number", "null"], "minimum": 0},
+        "cost_is_estimate": {"type": "boolean"},
+        "usage_evidence_path": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "audioMetadata": {
+      "type": "object",
+      "properties": {
+        "duration_seconds": {"type": ["number", "null"], "minimum": 0},
+        "codec": {"type": ["string", "null"]},
+        "sample_rate_hz": {"type": ["integer", "null"], "minimum": 1},
+        "channels": {"type": ["integer", "null"], "minimum": 1},
+        "file_size_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "assembly_settings": {"type": "object"},
+        "transcript_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "caption": {
+      "type": "object",
+      "properties": {
+        "status": {"enum": ["paused_no_files", "generated_not_attached", "attached_verified", "blocked"]},
+        "model": {"type": ["string", "null"]},
+        "raw_response_path": {"type": ["string", "null"]},
+        "caption_path": {"type": ["string", "null"]},
+        "caption_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+        "validation": {"type": "object"},
+        "attachment_readback": {"type": ["object", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "artwork": {
+      "type": "object",
+      "properties": {
+        "prompt_path": {"type": ["string", "null"]},
+        "tool_and_model": {"type": ["string", "null"]},
+        "width_px": {"type": ["integer", "null"], "minimum": 1},
+        "height_px": {"type": ["integer", "null"], "minimum": 1},
+        "thumbnail_reviewed": {"type": "boolean"},
+        "phone_thumbnail_size_px": {"type": ["integer", "null"], "minimum": 1},
+        "spelling_reviewed": {"type": "boolean"},
+        "different_from_show_cover": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "publicationReadback": {
+      "type": "object",
+      "properties": {
+        "service_episode_id": {"type": ["string", "null"]},
+        "live_url": {"type": ["string", "null"], "format": "uri"},
+        "title": {"type": ["string", "null"]},
+        "description_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+        "show_assignment": {"type": ["string", "null"]},
+        "saved_episode_art_matches": {"type": ["boolean", "null"]},
+        "public_page_read_at_utc": {"type": ["string", "null"], "format": "date-time"},
+        "playback_verified": {"type": ["boolean", "null"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

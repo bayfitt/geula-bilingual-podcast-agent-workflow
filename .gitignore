@@ -1,0 +1,47 @@
+# Credentials and private runtime configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+token.json
+secrets/
+private-config.*
+voice-library/*profile*.json
+
+# Local runtime and caches
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.DS_Store
+.codex/
+.playwright-mcp/
+
+# Episode and provider content must remain in the private project
+episodes/
+drafts/
+source/
+source-evidence/
+raw-sources/
+evidence/
+ledgers/
+manifest.json
+*.jsonl
+source-map.md
+linear-outline.md
+master-he.txt
+translation-en.txt
+audio/
+artwork/
+captions/
+*.mp3
+*.m4a
+*.wav
+*.srt
+*.vtt
+*.aiff
+*.flac
+*.log
+*-audit-*.jsonl

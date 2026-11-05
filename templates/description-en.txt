@@ -1,0 +1,10 @@
+<Episode title>
+
+This source-based episode follows <brief question> through <source names/citations>. It is based on “<article/video title>” by <author/channel>.
+
+Original source: <canonical URL>
+Primary sources: <source link 1>; <source link 2>
+English show/episode: <English URL>
+Hebrew edition: <Hebrew URL>
+
+AI disclosure: This episode was generated with AI and was not reviewed by a human. Hebrew drafting model: <actual model>. English translation: Luna Max (gpt-6-luna, maximum reasoning). Audio model: <actual provider and model>.

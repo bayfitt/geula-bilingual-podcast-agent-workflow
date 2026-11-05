@@ -1,0 +1,25 @@
+{
+  "episode_id": "YYYY-MM-DD-example-slug",
+  "status": "in_progress",
+  "created_at_utc": "2026-01-01T00:00:00Z",
+  "source": {
+    "kind": "article",
+    "canonical_url": "https://example.org/article",
+    "title": "<source title>",
+    "author_or_channel": "<author>",
+    "stable_video_id": null,
+    "published_at": "2026-01-01T00:00:00Z",
+    "retrieved_at_utc": null,
+    "evidence_path": null,
+    "sha256": null
+  },
+  "languages": {
+    "he": {"master_path": null, "transcript_sha256": null, "model_names": [], "voice_profile_ref": null, "audio_path": null, "audio_sha256": null, "episode_art_path": null, "episode_art_sha256": null, "live_episode_url": null},
+    "en": {"master_path": null, "transcript_sha256": null, "model_names": [], "voice_profile_ref": null, "audio_path": null, "audio_sha256": null, "episode_art_path": null, "episode_art_sha256": null, "live_episode_url": null}
+  },
+  "caption_status": "paused_no_files",
+  "publication_authorization": "<private authorization record or none>",
+  "next_unresolved_gate": "source_identity",
+  "live_episode_urls": {"he": null, "en": null},
+  "audit_path": null
+}

@@ -1,0 +1,52 @@
+# Copy to a private file and replace placeholders. Do not commit real identifiers.
+project:
+  timezone: America/New_York
+  local_check_time: "04:00"
+  no_new_item_behavior: no_changes_and_no_notification
+  jev_confidence_threshold: 0.95
+
+sources:
+  articles:
+    - name: Geula Movement
+      feed_url: https://geulamovement.substack.com/feed
+      monitoring_started_at_local: "<fixed baseline; do not advance to hide work>"
+      ledger_path: "<private article ledger>"
+  videos:
+    - name: "<channel display name>"
+      channel_id: "<stable channel ID>"
+      baseline_video_id: "<video ID>"
+      ledger_path: "<private video ledger>"
+
+languages:
+  content_master: he
+  editions: [he, en]
+  english_translation:
+    provider: OpenAI
+    display_name: Luna Max
+    model: gpt-6-luna
+    reasoning_effort: max
+    direction: he_to_en
+    paragraph_by_paragraph: true
+
+audio:
+  provider: "<configured provider>"
+  model: "Google Gemini 3.8 Flash TTS (example; verify the provider-returned name on each run)"
+  profiles:
+    he: "<private profile path or secret-store reference>"
+    en: "<private profile path or secret-store reference>"
+  allow_fallback: false
+
+captions:
+  status: paused
+  resume_requires_explicit_user_instruction: true
+
+publication:
+  mode: draft_unless_authorized
+  auto_publish_after_all_gates: false
+  english_show_url: "<existing show URL>"
+  hebrew_show_url: "<existing show URL>"
+  require_live_readback_and_playback: true
+
+privacy:
+  keep_episode_folders_private: true
+  never_commit_credentials_or_voice_ids: true

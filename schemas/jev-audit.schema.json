@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/jev-audit.schema.json",
+  "title": "One Jev gate result",
+  "type": "object",
+  "required": ["action_id", "timestamp_utc", "question", "evidence_path", "provider", "model", "yes", "confidence", "usage", "provider_displayed_approximate_cost_usd"],
+  "properties": {
+    "action_id": {"type": "string", "minLength": 1},
+    "attempt": {"type": "integer", "minimum": 1},
+    "timestamp_utc": {"type": "string", "format": "date-time"},
+    "question": {"type": "string", "minLength": 1},
+    "evidence_path": {"type": "string", "minLength": 1},
+    "evidence_sha256": {"type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$"},
+    "provider": {"type": "string"},
+    "model": {"type": "string"},
+    "yes": {"type": ["boolean", "null"]},
+    "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "usage": {"type": "object", "properties": {"input_tokens": {"type": ["integer", "null"], "minimum": 0}, "output_tokens": {"type": ["integer", "null"], "minimum": 0}}, "additionalProperties": false},
+    "provider_displayed_approximate_cost_usd": {"type": ["number", "null"], "minimum": 0},
+    "cost_is_estimate": {"type": "boolean"},
+    "error": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}
